@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-# pc_type           lenovo
-# create_time:      2020/2/19 12:16
-# file_name:        super_comment.py
-# github            https://github.com/inspurer
-# qq邮箱            2391527690@qq.com
-# 微信公众号         月小水长(ID: inspurer)
 
 import time
 import traceback
