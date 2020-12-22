@@ -17,7 +17,8 @@ requests.packages.urllib3.disable_warnings()
 from lxml import etree
 import json
 
-Cookie = "替换你自己weibo.cn的cookie"
+Cookie = "_T_WM=b9682167bae65709cf634704e8fc9e51; SCF=AjGhdd52NUz_lsErxY-obURf274GTWZ8Iwh1UstYz4oVe8FM-IrcrSmsNC2alGVqvxU1pIvEpT6uaNS-E4dbn7Y.; SUB=_2A25y5ZeODeRhGeBL6VcT9y_EzziIHXVuKTnGrDV6PUJbktANLWPmkW1NRybJYkEnurByrdJeGdpe7GRcydl_a6tw; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WWY8yw3g.S_a6DU9BlxXSOC5NHD95QcSKzfeoMp1hBXWs4Dqc_zi--ci-zEiKn4i--Ri-isi-zNi--fi-82i-2ci--Xi-z4i-27i--NiKLWiKnXi--fi-2Xi-zpi--fi-isiKnci--fiK.7iKLF; SSOLoginState=1608640468"
+Cookie = "请自行修改"
 User_Agent = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0"
 )
@@ -72,11 +73,17 @@ class WeiboUserScrapy:
         try:
             url = "https://weibo.cn/{}/info".format(self.user_id)
             selector = self.deal_html(url)
+            birth = "不详"
+            data = selector.xpath("//div/text()")
+            for d in data:
+                if d[0:2] == "生日":
+                    birth = d[3:]
             nickname = selector.xpath("//title/text()")[0]
             self.nickname = nickname[:-3]
             if self.nickname == "登录 - 新" or self.nickname == "新浪":
                 sys.exit("cookie错误或已过期")
             print("用户昵称: " + self.nickname)
+            print("用户生日: " + birth)
         except Exception as e:
             print("Error: ", e)
             traceback.print_exc()
@@ -95,6 +102,7 @@ class WeiboUserScrapy:
 
             self.followers = int(user_info[2][3:-1])
             print("粉丝数: " + str(self.followers))
+
             print("*" * 100)
         except Exception as e:
             print("Error: ", e)
@@ -533,4 +541,4 @@ class WeiboUserScrapy:
 
 
 if __name__ == "__main__":
-    WeiboUserScrapy(user_id=1506711913, filter=0)
+    WeiboUserScrapy(user_id=1648007681, filter=0)
